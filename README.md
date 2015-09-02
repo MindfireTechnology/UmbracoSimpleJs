@@ -6,6 +6,7 @@ The best way to get this package is to wait for the release which will include a
 1. Install SimpleCart.js onto your website
 2. Setup with SendForm checkout:
 ```JavaScript
+// Initialize the cart
 simpleCart({
 		checkout: {
 				type: "SendForm",
