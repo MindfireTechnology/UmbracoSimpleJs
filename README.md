@@ -1,5 +1,5 @@
 # UmbracoSimpleJs
-Integrates SimpleJS into Umbraco
+Integrates SimpleCart.js (https://github.com/wojodesign/simplecart-js) into Umbraco
 
 The best way to get this package is to wait for the release which will include all document types and dependencies. For manual installation:
 
