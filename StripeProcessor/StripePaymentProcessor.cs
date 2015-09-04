@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,7 +23,7 @@ namespace StripeProcessor
 			if (string.IsNullOrWhiteSpace(value.CardNumber) || value.CardNumber.Length < 15 || value.CardNumber.Length > 16)
 				yield return "Invalid format for Card Number";
 
-			if (value.ExpirationYear > 2000 || value.ExpirationYear < DateTime.Today.Year)
+			if (value.ExpirationYear < DateTime.Today.Year)
 				yield return "Invalid Expiration Year";
 
 			if (value.ExpirationMonth < 1 || value.ExpirationMonth > 12)
@@ -37,6 +38,7 @@ namespace StripeProcessor
 			// Create the customer
 			// Create the charge
 			var service = new StripeChargeService();
+			service.ApiKey = ConfigurationManager.AppSettings["StripeApiKey"];
 			var charge = service.Create(new StripeChargeCreateOptions
 			{
 				Amount = (int)(payment.ChargeAmount * 100),

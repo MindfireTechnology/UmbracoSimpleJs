@@ -7,12 +7,13 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using Umbraco.Core.Models;
 using Umbraco.Web.WebApi;
+using System.Net.Http.Formatting;
 
 namespace UmbracoSimpleJsProcessor
 {
 	public class SimpleJsOrderController : UmbracoApiController
 	{
-		private const string OrderNumber = "OrderNumber";
+		private const string OrderNumber = "orderNumber";
 
 		//currency=USD
 		//shipping=0
@@ -30,6 +31,12 @@ namespace UmbracoSimpleJsProcessor
 		//OrderNumber=6789 {CUSTOM DATA}
 		public string Process([FromBody] Dictionary<string, string> values)
 		{
+			//Dictionary<string, string> values = new Dictionary<string, string>();
+			//foreach (var v in value)
+			//{
+			//	values.Add(v.Key, v.Value);
+			//}
+
 			if (!values.ContainsKey(OrderNumber))
 				throw new ArgumentNullException(OrderNumber);
 
@@ -37,17 +44,20 @@ namespace UmbracoSimpleJsProcessor
 			if (!int.TryParse(values[OrderNumber], out orderId))
 				throw new ArgumentNullException(OrderNumber);
 
-			if (!values.ContainsKey("CardNumber"))
-				throw new ArgumentException("CardNumber");
+			if (!values.ContainsKey("cardNumber"))
+				throw new ArgumentException("cardNumber");
 
-			if (!values.ContainsKey("CVV"))
-				throw new ArgumentException("CVV");
+			if (!values.ContainsKey("cvv"))
+				throw new ArgumentException("cvv");
 
-			if (!values.ContainsKey("ExpMonth"))
-				throw new ArgumentException("ExpMonth");
+			if (!values.ContainsKey("expMonth"))
+				throw new ArgumentException("expMonth");
 
-			if (!values.ContainsKey("ExpYear"))
-				throw new ArgumentException("ExpYear");
+			if (!values.ContainsKey("expYear"))
+				throw new ArgumentException("expYear");
+
+			if (!values.ContainsKey("nameOnCard"))
+				throw new ArgumentException("nameOnCard");
 
 			var order = Services.ContentService.GetById(orderId);
 			var payment = new PaymentInfo();
@@ -60,20 +70,20 @@ namespace UmbracoSimpleJsProcessor
 			payment.State = TryGetDocumentValue<string>(order, "billingState");
 			payment.PostCodeOrZip = TryGetDocumentValue<string>(order, "billingPostCodeOrZip");
 			payment.Country = TryGetDocumentValue<string>(order, "billingCountry");
-			payment.Email = TryGetDocumentValue<string>(order, "Email");
+			payment.Email = TryGetDocumentValue<string>(order, "email");
 
 
-			payment.NameOnCard = TryGetDocumentValue<string>(order, "NameOnCard", true);
-			payment.CardNumber = values["CardNumber"];
-			payment.ExpirationMonth = int.Parse(values["ExpMonth"]);
-			payment.ExpirationYear = int.Parse(values["ExpYear"]);
+			payment.NameOnCard = values["nameOnCard"];
+			payment.CardNumber = values["cardNumber"];
+			payment.ExpirationMonth = int.Parse(values["expMonth"]);
+			payment.ExpirationYear = int.Parse(values["expYear"]);
 
-			payment.ChargeAmount = TryGetDocumentValue<decimal>(order, "OrderTotal", true);
-			payment.Currency = TryGetDocumentValue<string>(order, "Currency") ?? "USD";
+			payment.ChargeAmount = TryGetDocumentValue<decimal>(order, "orderTotal", true);
+			payment.Currency = TryGetDocumentValue<string>(order, "currency") ?? "USD";
 			payment.OrderRefNumber = orderId.ToString();
 
 			// Attempt to get the processor
-			var processor = (IPaymentProcessor)Activator.CreateInstance(GetAssemblyName(), GetTypeName());
+			var processor = (IPaymentProcessor)Activator.CreateInstance(GetAssemblyName(), GetTypeName()).Unwrap();
 
 			// Validate the data
 			var validation = processor.Validate(payment).ToArray();
@@ -88,9 +98,9 @@ namespace UmbracoSimpleJsProcessor
 			if (!result)
 				throw new InvalidOperationException("Credit Card Charge Failed. Reason: " + errorString);
 
-			TrySetDocumentValue<string>(order, "TransactionId", transactionId, true);
-			TrySetDocumentValue<DateTime>(order, "PaidDate", DateTime.Now, false);
-			TrySetDocumentValue<decimal>(order, "PaidAmount", payment.ChargeAmount, false);
+			TrySetDocumentValue<string>(order, "transactionId", transactionId, true);
+			TrySetDocumentValue<DateTime>(order, "paidDate", DateTime.Now, false);
+			TrySetDocumentValue<decimal>(order, "paidAmount", payment.ChargeAmount, false);
 
 			Services.ContentService.SaveAndPublishWithStatus(order);
 
@@ -120,7 +130,7 @@ namespace UmbracoSimpleJsProcessor
 					throw new InvalidOperationException("Order Document Type does not include a field named: " + propertyName);
 			} 
 			else
-				prop.Value = value;
+				prop.Value = value.ToString();
 		}
 
 		private string GetAssemblyName()
