@@ -1,0 +1,11 @@
+C:\SVN\Aurora Awards\DocxRecieptBuilder\bin\Debug\DocxRecieptBuilder.dll
+C:\SVN\Aurora Awards\DocxRecieptBuilder\bin\Debug\DocxRecieptBuilder.pdb
+C:\SVN\Aurora Awards\DocxRecieptBuilder\bin\Debug\DocX.dll
+C:\SVN\Aurora Awards\DocxRecieptBuilder\obj\Debug\DocxRecieptBuilder.dll
+C:\SVN\Aurora Awards\DocxRecieptBuilder\obj\Debug\DocxRecieptBuilder.pdb
+C:\Users\Michael\Documents\GitHub\UmbracoSimpleJs\DocxRecieptBuilder\obj\Debug\DocxRecieptBuilder.csprojResolveAssemblyReference.cache
+C:\Users\Michael\Documents\GitHub\UmbracoSimpleJs\DocxRecieptBuilder\obj\Debug\DocxRecieptBuilder.dll
+C:\Users\Michael\Documents\GitHub\UmbracoSimpleJs\DocxRecieptBuilder\bin\Debug\DocxRecieptBuilder.dll
+C:\Users\Michael\Documents\GitHub\UmbracoSimpleJs\DocxRecieptBuilder\bin\Debug\DocxRecieptBuilder.pdb
+C:\Users\Michael\Documents\GitHub\UmbracoSimpleJs\DocxRecieptBuilder\bin\Debug\DocX.dll
+C:\Users\Michael\Documents\GitHub\UmbracoSimpleJs\DocxRecieptBuilder\obj\Debug\DocxRecieptBuilder.pdb
