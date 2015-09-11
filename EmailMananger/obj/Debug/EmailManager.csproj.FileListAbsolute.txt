@@ -1,0 +1,16 @@
+C:\SVN\Aurora Awards\EmailMananger\bin\Debug\EmailMananger.dll.config
+C:\SVN\Aurora Awards\EmailMananger\bin\Debug\EmailMananger.dll
+C:\SVN\Aurora Awards\EmailMananger\bin\Debug\EmailMananger.pdb
+C:\SVN\Aurora Awards\EmailMananger\bin\Debug\SendGrid.SmtpApi.dll
+C:\SVN\Aurora Awards\EmailMananger\bin\Debug\SendGridMail.dll
+C:\SVN\Aurora Awards\EmailMananger\obj\Debug\EmailManager.csprojResolveAssemblyReference.cache
+C:\SVN\Aurora Awards\EmailMananger\obj\Debug\EmailMananger.dll
+C:\SVN\Aurora Awards\EmailMananger\obj\Debug\EmailMananger.pdb
+C:\Users\Michael\Documents\GitHub\UmbracoSimpleJs\EmailMananger\bin\Debug\EmailMananger.dll.config
+C:\Users\Michael\Documents\GitHub\UmbracoSimpleJs\EmailMananger\bin\Debug\EmailMananger.dll
+C:\Users\Michael\Documents\GitHub\UmbracoSimpleJs\EmailMananger\bin\Debug\EmailMananger.pdb
+C:\Users\Michael\Documents\GitHub\UmbracoSimpleJs\EmailMananger\bin\Debug\SendGrid.SmtpApi.dll
+C:\Users\Michael\Documents\GitHub\UmbracoSimpleJs\EmailMananger\bin\Debug\SendGridMail.dll
+C:\Users\Michael\Documents\GitHub\UmbracoSimpleJs\EmailMananger\obj\Debug\EmailMananger.dll
+C:\Users\Michael\Documents\GitHub\UmbracoSimpleJs\EmailMananger\obj\Debug\EmailMananger.pdb
+C:\Users\Michael\Documents\GitHub\UmbracoSimpleJs\EmailMananger\obj\Debug\EmailManager.csprojResolveAssemblyReference.cache

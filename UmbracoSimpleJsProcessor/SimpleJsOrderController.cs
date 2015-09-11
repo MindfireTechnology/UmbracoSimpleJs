@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EmailManager;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
@@ -93,10 +94,34 @@ namespace UmbracoSimpleJsProcessor
 			// Process the order! -- Now we see if these data plans are worth the price we paid!
 			string errorString;
 			string transactionId;
-			bool result = processor.Charge(payment, out errorString, out transactionId);
+
+			// Make the result false, so that an email will still be sent if there is a payment error.
+			bool result = false;
+			result = processor.Charge(payment, out errorString, out transactionId);
 
 			if (!result)
+			{
+				var Email = new SendgridEmailManager();
+
+				string FromEmail = "mmeyer@mindfiretechnology.com";
+				string ToEmail = "mmeyer@mindfiretechnology.com";
+				string body = "There was a problem with this order: " + orderId;
+				string subject = "Payment Problem";
+				
+				Email.SendEmail(FromEmail, ToEmail, subject, body);
+
 				throw new InvalidOperationException("Credit Card Charge Failed. Reason: " + errorString);
+			} else
+			{
+				var Email = new SendgridEmailManager();
+
+				string FromEmail = "mmeyer@mindfiretechnology.com";
+				string ToEmail = "mmeyer@mindfiretechnology.com";
+				string body = "Thank you for your order.  Your transaction id is: " + transactionId + "Your reciept is attached.  Contact us if you have further questions.";
+				string subject = "Payment Complete";
+
+				Email.SendEmail(FromEmail, ToEmail, subject, body);
+			}
 
 			TrySetDocumentValue<string>(order, "transactionId", transactionId, true);
 			TrySetDocumentValue<DateTime>(order, "paidDate", DateTime.Now, false);
